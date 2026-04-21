@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Donation History</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#eef2f3
+}
+
+.navbar{
+    background:#1f2a30;
+    color:white;
+    padding:14px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center
+}
+
+.logo{
+    color:#7CFF6B;
+    font-size:22px;
+    font-weight:bold
+}
+.logo a{
+    color:#7CFF6B;
+    text-decoration:none
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+    font-size:14px
+}
+.nav-links a:hover{
+    color:#7CFF6B
+}
+
+.title{
+    text-align:center;
+    margin:25px 0;
+    font-size:28px
+}
+
+.container{
+    width:85%;
+    margin:auto
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
+    display:flex;
+    justify-content:space-between;
+    align-items:center
+}
+
+.items{
+    padding:8px 12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    margin-top:10px;
+    display:inline-block
+}
+
+.status{
+    border:2px solid #ff6b6b;
+    color:#ff6b6b;
+    padding:8px 22px;
+    border-radius:8px;
+    font-weight:bold
+}
+
+.date{
+    color:#777;
+    font-size:14px;
+    margin-top:8px
+}
+.date b{
+    color: #1f2a30;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <div class="logo"><a href="/home/">FoodShare</a></div>
+</div>
+
+<div class="title">Donation History</div>
+
+<div class="container" id="history"></div>
+
+<script>
+
+let user = localStorage.getItem("loggedUser")
+
+if(!user){
+    alert("Please login first!")
+    window.location.href = "/donor-login/"  
+}
+
+let data = JSON.parse(localStorage.getItem("donations")) || []
+let box = document.getElementById("history")
+
+if(data.length===0){
+box.innerHTML="<p style='text-align:center'>No donations yet</p>"
+}
+
+data.reverse().forEach(d=>{
+
+box.innerHTML+=`
+<div class="card">
+
+<div>
+<p><b>Donated to:</b> ${d.org}</p>
+<p><b>Donation:</b> ${d.foodType}</p>
+<p><b>Your Address:</b> ${d.address}</p>
+<div class="items">
+${d.item}<br>
+Qty: ${d.qty}
+</div>
+
+<div class="date"><p><b>Expiry Date : </b>${d.date}</p></div>
+</div>
+
+<div class="status">${d.status}</div>
+
+</div>
+`
+})
+</script>
+
+</body>
+</html>

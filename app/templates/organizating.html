@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create Account</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container {
+    background: #fff;
+    width: 800px;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+h2 { text-align: center; margin-bottom: 25px; }
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 30px;
+}
+label { font-size: 14px; margin-bottom: 5px; display: block; }
+input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #6a5acd;
+    border-radius: 6px;
+    outline: none;
+}
+.btn {
+    background: orange;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 200px;
+    margin: 25px auto 10px;
+    display: block;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.btn:hover { background: darkorange; }
+.login-text { text-align: center; font-size: 14px; }
+.login-text a { color: #6a5acd; text-decoration: none; font-weight: bold; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Create Account</h2>
+
+<form onsubmit="return validateForm()">
+<div class="form-grid">
+    <div>
+        <label>Organization Name</label>
+        <input type="text" id="orgName">
+    </div>
+    <div>
+        <label>Owner Name</label>
+        <input type="text" id="ownerName">
+    </div>
+
+    <div>
+        <label>Organization ID (Auto)</label>
+        <input type="text" id="orgId" readonly>
+    </div>
+    <div>
+        <label>State</label>
+        <input type="text" id="state" placeholder="Only Gujarat allowed">
+    </div>
+
+    <div>
+        <label>District</label>
+        <input type="text" id="district">
+    </div>
+    <div>
+        <label>Street</label>
+        <input type="text" id="street">
+    </div>
+
+    <div>
+        <label>Pin Code</label>
+        <input type="text" id="pincode">
+    </div>
+    <div>
+        <label>Phone Number</label>
+        <input type="text" id="phone">
+    </div>
+
+    <div>
+        <label>Email</label>
+        <input type="email" id="email">
+    </div>
+    <div></div>
+
+    <div>
+        <label>Password</label>
+        <input type="password" id="password">
+    </div>
+    <div>
+        <label>Confirm Password</label>
+        <input type="password" id="confirmPassword">
+    </div>
+</div>
+
+<button class="btn">Register</button>
+
+<div class="login-text">
+Already have an account? 
+<a href="/org-login/">Login</a>   
+</div>
+</form>
+</div>
+
+<script>
+
+function generateOrgID() {
+    const year = new Date().getFullYear();
+    const random = Math.floor(1000 + Math.random() * 9000);
+    return "ORG-" + year + "-" + random;
+}
+
+// Auto fill when page loads
+window.onload = function(){
+    document.getElementById("orgId").value = generateOrgID();
+};
+
+function validateForm() {
+    let orgName = document.getElementById("orgName").value.trim();
+    let ownerName = document.getElementById("ownerName").value.trim();
+    let state = document.getElementById("state").value.trim();
+    let district = document.getElementById("district").value.trim();
+    let street = document.getElementById("street").value.trim();
+    let pincode = document.getElementById("pincode").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let orgId = document.getElementById("orgId").value;
+
+    if (!orgName || !ownerName || !state || !district || !street || !pincode || !phone || !email || !password || !confirmPassword) {
+        alert("All fields are required!");
+        return false;
+    }
+
+    if (state.toLowerCase() !== "gujarat") {
+        alert("Only Gujarat state is allowed!");
+        return false;
+    }
+
+    if (!/^\d{6}$/.test(pincode)) {
+        alert("Pin code must be 6 digits!");
+        return false;
+    }
+
+    if (!/^\d{10}$/.test(phone)) {
+        alert("Phone number must be 10 digits!");
+        return false;
+    }
+
+    if (password.length < 6) {
+        alert("Password must be at least 6 characters!");
+        return false;
+    }
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return false;
+    }
+
+    let orgs = JSON.parse(localStorage.getItem("organizations")) || [];
+
+    let exists = orgs.find(o => o.email === email);
+    if (exists) {
+        alert("Organization already exists!");
+        return false;
+    }
+
+    let org = {
+        orgName,
+        ownerName,
+        orgId,
+        email,
+        password
+    };
+
+    orgs.push(org);
+
+    localStorage.setItem("organizations", JSON.stringify(orgs));
+
+    alert("Registration Successful!");
+
+    window.location.href = "/org-login/";  
+
+    return false;
+}
+</script>
+
+</body>
+</html>

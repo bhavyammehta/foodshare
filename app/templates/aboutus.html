@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Us | FoodShare</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f9f9f9;
+    color: #333;
+}
+
+.navbar {
+    background: #000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    color: #7CFF6B;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 18px;
+    font-size: 15px;
+}
+
+nav a:hover {
+    color: #7CFF6B;
+}
+
+.hero {
+    height: 55vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 42px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="nav-container">
+      
+        <div class="logo"><a href="/home/">FoodShare</a></div>
+        <nav>
+        
+            <a href="/home/">Home</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>About FoodShare</h1>
+</section>
+
+<section class="about-section">
+
+    <div class="about-top">
+        <h2>Who We Are</h2>
+        <p>
+            FoodShare is a social initiative dedicated to reducing food waste and fighting hunger by connecting surplus food to people who need it most. 
+            We believe no food should be wasted when someone is hungry.
+        </p>
+    </div>
+
+    <div class="about-content">
+        <div class="about-text">
+            <h3>Our Mission</h3>
+            <p>
+                Our mission is to build a sustainable food-sharing ecosystem where excess food from restaurants, events, and households reaches the needy safely and efficiently.
+            </p>
+            <p>
+                We leverage technology to connect donors with NGOs and volunteers, making food donation simple, fast, and impactful.
+            </p>
+
+            <h3>Our Vision</h3>
+            <p>
+                To create a world where hunger is eliminated and food resources are used responsibly for the benefit of society and the environment.
+            </p>
+        </div>
+
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d">
+        </div>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat-box">
+        <h2>-</h2>
+        <p>Meals Donated</p>
+    </div>
+    <div class="stat-box">
+        <h2>-</h2>
+        <p>Volunteers</p>
+    </div>
+    <div class="stat-box">
+        <h2>-</h2>
+        <p>Partner NGOs</p>
+    </div>
+    <div class="stat-box">
+        <h2>-</h2>
+        <p>Cities Covered</p>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-box">
+            <h2>FoodShare</h2>
+            <p>Sharing food. Spreading hope. Changing lives.</p>
+        </div>
+
+        <div class="footer-box">
+            <h3>Quick Links</h3>
+         
+            <a href="/home/">Home</a>
+        </div>
+
+        <div class="footer-box">
+            <h3>Contact Us</h3>
+            <p>Gujarat</p>
+            <p>foodshare@gmail.com</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 FoodShare | All Rights Reserved
+    </div>
+</footer>
+
+</body>
+</html>

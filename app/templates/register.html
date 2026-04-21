@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Donor Registration | FoodShare</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif
+}
+body{
+    margin:0;
+    min-height:100vh;
+    background: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c') no-repeat center center/cover;
+    display:flex;
+    align-items:center;
+    justify-content:center
+}
+.container{
+    width:950px;
+    height:560px;
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+    display:flex;
+    overflow:hidden
+}
+.left{
+    width:45%;
+    background:url("https://images.unsplash.com/photo-1593113630400-ea4288922497");
+    background-size:cover;
+    color:#fff;
+    position:relative
+}
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    padding:40px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center
+}
+.right{
+    width:55%;
+    padding:35px;
+}
+.logo{
+    font-size:26px;
+    font-weight:bold;
+    color:#2ecc71;
+    text-align:center
+}
+.role{
+    text-align:center;
+    margin-bottom:20px;
+}
+input,textarea{
+    width:100%;
+    padding:10px;
+    margin-bottom:12px;
+}
+button{
+    width:100%;
+    padding:12px;
+    background:#2ecc71;
+    border:none;
+    color:#fff;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="left">
+    <div class="overlay">
+        <h2>Become a Donor 💚</h2>
+        <p>Help reduce food waste</p>
+    </div>
+</div>
+
+<div class="right">
+
+<div class="logo">FoodShare</div>
+<div class="role">Donor Registration</div>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="name" placeholder="Full Name">
+    <input type="tel" name="mobile" placeholder="Mobile">
+    <input type="email" name="email" placeholder="Email">
+    <input type="password" name="password" placeholder="Password">
+    <textarea name="address" placeholder="Address"></textarea>
+
+    <button type="submit">Register</button>
+</form>
+
+<p style="text-align:center;">
+Already have account? 
+<a href="/donor-login/">Login</a>
+</p>
+{% if error %}
+<p style="color:red; text-align:center;">{{ error }}</p>
+{% endif %}
+
+</div>
+
+</div>
+
+</body>
+</html>

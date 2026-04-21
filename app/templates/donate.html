@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Donate Food</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f6f7fb;
+        }
+
+        .logo {
+            background: #222;
+            padding: 14px 30px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logo a {
+            color: #7CFF6B;
+            text-decoration: none;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 28px;
+            margin: 25px 0;
+        }
+
+        .type-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .type-cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .type-card {
+            width: 220px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, .12);
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .type-card:hover {
+            transform: translateY(-5px);
+            border: 2px solid #2ecc71;
+        }
+
+        .type-card img {
+            width: 70px;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            width: 420px;
+            margin: 0 auto 40px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+            padding: 22px;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0 5px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        textarea {
+            resize: none;
+            height: 90px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 18px;
+            padding: 12px;
+            background: #2ecc71;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+        }
+
+        .popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-box {
+            background: #fff;
+            width: 360px;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="logo">
+        <a href="/home/">FoodShare</a>   
+    </div>
+
+    <div class="page-title">DONATE FOOD</div>
+
+    <div class="type-section">
+        <h2>What Are You Donating?</h2>
+
+        <div class="type-cards">
+            <div class="type-card" onclick="selectType('Cooked Food')">
+                <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png">
+                <h3>Cooked Food</h3>
+                <p>Fresh homemade or hotel food</p>
+            </div>
+
+            <div class="type-card" onclick="selectType('Packed Food')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
+                <h3>Packed Food</h3>
+                <p>Sealed items like biscuits, snacks</p>
+            </div>
+
+            <div class="type-card" onclick="selectType('Raw Food')">
+                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png">
+                <h3>Raw Food</h3>
+                <p>Rice, wheat, vegetables</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <!-- SAME FORM -->
+
+        <label>Select Food Type</label>
+        <select id="foodType">
+            <option disabled selected>Select Food Type</option>
+            <option>Cooked Food</option>
+            <option>Packed Food</option>
+            <option>Raw Food</option>
+        </select>
+
+        <label>Food Item Name</label>
+        <input type="text" id="itemName">
+
+        <label>Quantity</label>
+        <input type="number" id="quantity">
+
+        <label>Serves How Many People?</label>
+        <input type="number" id="serves">
+
+        <label>Additional Notes</label>
+        <textarea id="notes"></textarea>
+
+        <label>Select Organization</label>
+        <select id="organization">
+            <option disabled selected>Select Organization</option>
+            <option>Aanandba Vruddhashram</option>
+            <option>Jan Sadhna Trust</option>
+        </select>
+
+        <label>Contact</label>
+        <input type="text" value="8745312690" readonly>
+
+        <label>Address</label>
+        <select id="address">
+            <option disabled selected>Select Address</option>
+            <option>Veer Residency, Ahmedabad</option>
+            <option>Jan Sadhna Trust, Satellite, Ahmedabad</option>
+        </select>
+
+        <p class="error" id="errorMsg">Please enter valid details</p>
+
+        <button onclick="submitDonation()">Submit Donation</button>
+
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-box">
+            <h2>Thank You For Donating!</h2>
+            <p>Your donation details have been submitted.</p>
+            <button onclick="closePopup()">Done</button>
+        </div>
+    </div>
+
+<script>
+function selectType(type) {
+    document.getElementById("foodType").value = type
+}
+
+function submitDonation() {
+
+    let foodType = document.getElementById("foodType").value
+    let item = document.getElementById("itemName").value
+    let qty = document.getElementById("quantity").value
+    let serves = document.getElementById("serves").value
+    let notes = document.getElementById("notes").value
+    let org = document.getElementById("organization").value
+    let address = document.getElementById("address").value
+
+    if (!foodType || !item || qty <= 0 || serves <= 0 || !org || !address) {
+        document.getElementById("errorMsg").style.display = "block"
+        return
+    }
+
+    document.getElementById("errorMsg").style.display = "none"
+
+    let donation = {
+        org, foodType, item, qty, serves, notes, address,
+        date: new Date().toLocaleDateString(),
+        status: "Pending..."
+    }
+
+    let list = JSON.parse(localStorage.getItem("donations")) || []
+    list.push(donation)
+    localStorage.setItem("donations", JSON.stringify(list))
+
+    document.getElementById("popup").style.display = "flex"
+}
+
+function closePopup() {
+    window.location.href = "/request/"   
+}
+</script>
+
+</body>
+</html>

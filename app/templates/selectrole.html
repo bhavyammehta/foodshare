@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Select Role | FoodShare</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background:
+        linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+        url("{% static 'images/bg.jpg' %}") center/cover no-repeat;
+    min-height: 100vh;
+    color: white;
+}
+
+.navbar {
+    background: #000;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a{
+    color:#7CFF6B;
+    font-size:22px;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.logo a:hover{
+    color:#66e85a;
+}
+
+.page-title {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 26px;
+    letter-spacing: 2px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 200px;
+    padding: 20px 40px 60px;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 450px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 50px;
+    text-align: center;
+}
+
+.card h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.green {
+    color: #2ecc71;
+}
+
+.card p {
+    font-size: 16px;
+    line-height: 24px;
+    color: #eee;
+    margin-bottom: 35px;
+}
+
+.card button {
+    background: #f39c12;
+    border: none;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background: #e67e22;
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo"><a href="#">FoodShare</a></div>
+</header>
+
+<div class="page-title">SELECT YOUR ROLE</div>
+
+<section class="container">
+
+    <!-- ORGANIZATION -->
+    <div class="card">
+        <h2>For <span class="green">Organizations</span></h2>
+        <p>
+            Join as an organization to receive and distribute food to those in need.
+            Help us make a real difference in society.
+        </p>
+        <button onclick="goOrg()">Continue</button>
+    </div>
+
+    <!-- DONOR -->
+    <div class="card">
+        <h2>For <span class="green">Donors</span></h2>
+        <p>
+            Become a donor and share your surplus food with people who need it most.
+            Your small help can change lives.
+        </p>
+        <button onclick="goDonor()">Continue</button>
+    </div>
+
+</section>
+
+<script>
+// clear old session
+localStorage.removeItem("loggedUser");
+localStorage.removeItem("role");
+
+function goDonor(){
+    window.location.href = "/donor-login/";   
+}
+
+function goOrg(){
+    window.location.href = "/org-login/";  
+}
+</script>
+
+</body>
+</html>

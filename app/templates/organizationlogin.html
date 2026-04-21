@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Donation Organization Login</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: -1;
+}
+
+.main-container {
+    width: 900px;
+    background: #0d2b4d;
+    border-radius: 15px;
+    padding: 25px;
+    color: white;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.card {
+    margin-top: 20px;
+    display: flex;
+    background: rgba(0,0,0,0.7);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.left {
+    width: 50%;
+    padding: 30px;
+    background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092') no-repeat center/cover;
+}
+
+.left h2 {
+    font-size: 36px;
+}
+
+.left span {
+    color: yellow;
+}
+
+.left .green {
+    color: #00ff99;
+}
+
+.right {
+    width: 50%;
+    padding: 30px;
+}
+
+.input-box {
+    margin-bottom: 15px;
+}
+
+.input-box label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: #2fd3a3;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: #24b28a;
+}
+
+.register {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.register a {
+    color: #2fd3a3;
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="main-container">
+    <div class="title">
+        <h1>Donation Organization</h1>
+        <p>Non-profit organizations distributing food to those in need</p>
+    </div>
+
+    <div class="card">
+        <div class="left">
+            <h2><span>Donate</span> and <br>Make Someone feel <span class="green">Great!</span></h2>
+        </div>
+
+        <div class="right">
+            <h3>Organization Login</h3>
+
+            <form onsubmit="return validateForm()">
+                <div class="input-box">
+                    <label>Organization ID</label>
+                    <input type="text" id="orgId" placeholder="Enter Organization ID">
+                </div>
+
+                <div class="input-box">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="Enter Email">
+                </div>
+
+                <div class="input-box">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter Password">
+                </div>
+
+              <button type="button" onclick="loginOrg()" class="login-btn">Login</button>
+            </form>
+
+            <div class="register">
+                Register New Organization? 
+                <a href="/org-register/">Register</a>  
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function loginOrg(){
+
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    let orgs = JSON.parse(localStorage.getItem("organizations")) || [];
+
+    let org = orgs.find(o => 
+        o.email === email &&
+        o.password === password
+    );
+
+    if(org){
+        localStorage.setItem("loggedUser", JSON.stringify(org));
+        localStorage.setItem("role", "org");
+
+        alert("Organization Login Successful!");
+
+        window.location.href = "/home/";   
+    }
+    else{
+        alert("Invalid Email or Password!");
+    }
+}
+</script>
+
+</body>
+</html>
